@@ -1,0 +1,56 @@
+name: medis
+description: A new Flutter project.
+
+publish_to: "none"
+version: 1.0.0+2
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  http: ^0.13.0
+  html: ^0.15.0
+  cupertino_icons: ^1.0.0
+  provider: ^4.3.2+4
+  toast: ^0.1.5
+  shared_preferences: 0.5.3
+  font_awesome_flutter: ^8.11.0
+  package_info: ^0.4.3+2
+  url_launcher: ^5.4.7
+  flutter_easyloading: ^2.2.2
+  mvvm_builder: ^2.1.5
+  device_info: ^1.0.0
+  connectivity: ^2.0.2
+  intl: ^0.17.0
+  lifecycle: ^0.1.1+1
+  carousel_slider: ^3.0.0
+  fradio: ^1.0.1
+  badges: ^1.1.4
+  localstorage: ^4.0.0+1
+  money_formatter: ^0.0.3
+
+  firebase_core:
+  firebase_messaging:
+  flutter_local_notifications: ^3.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/images/
+
+  fonts:
+    - family: QuickSand
+      fonts:
+        - asset: fonts/QuickSandbold.ttf
+        - asset: fonts/quicksandlight.ttf
+        - asset: fonts/quicksandregular.ttf
+        - asset: fonts/quicksandsemibold.ttf
