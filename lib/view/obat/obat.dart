@@ -33,36 +33,33 @@ class _ObatState extends State<ObatScreen>
   @override
   void onLifecycleEvent(LifecycleEvent event) {
     if (event == LifecycleEvent.active) {
-      setState(() {
-        callback();
-      });
+      callback();
     }
   }
 
   @override
   void initState() {
     super.initState();
-    this.obatResponse = FarmasiStorage.getObatStorage();
-
-    if (obatResponse != null) {
-      this.listObat = obatResponse.data.barang;
-      this.countObat = obatResponse.data.count;
-    }
-
     callback();
   }
 
   callback() {
     setState(() {
+      this.obatResponse = FarmasiStorage.getObatStorage();
+
+      if (obatResponse != null) {
+        this.listObat = obatResponse.data.barang;
+        this.countObat = obatResponse.data.barang.length;
+      }
+
       this.dataCart = FarmasiStorage.getCartStorage();
       if (dataCart != null) {
-        this.countCart = dataCart.count;
+        this.countCart = dataCart.barang.length;
       }
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
+  updateObat() {
     if (obatResponse != null) {
       listData = ListView.builder(
           itemCount: listObat.length,
@@ -100,7 +97,11 @@ class _ObatState extends State<ObatScreen>
         ],
       );
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    updateObat();
     return MVVMPage<ObatPresenter, ObatViewModel>(
       builder: (context, presenter, model) {
         obatPresenter = presenter;

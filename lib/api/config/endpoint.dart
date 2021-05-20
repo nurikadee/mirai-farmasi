@@ -9,4 +9,6 @@ class EndpointMedis {
   static var pesanan = Uri.parse(APiSettings.baseUrlFarmasi + "pesanan/all");
   static var addPesanan =
       Uri.parse(APiSettings.baseUrlFarmasi + "pesanan/add-pesanan");
+  static var userFarmasi =
+      Uri.parse(APiSettings.baseUrlFarmasi + "user/get-user-farmasi");
 }

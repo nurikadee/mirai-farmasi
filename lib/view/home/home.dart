@@ -36,7 +36,7 @@ class _HomeState extends State<Home> with LifecycleAware, LifecycleMixin {
     var dataCart = FarmasiStorage.getCartStorage();
     if (dataCart != null) {
       setState(() {
-        this.countCart = dataCart.count;
+        this.countCart = dataCart.barang.length;
       });
     }
   }

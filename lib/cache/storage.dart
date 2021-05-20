@@ -54,10 +54,8 @@ class FarmasiStorage {
       List<Barang> currentList = dataObat.barang;
       currentList.add(obat);
 
-      dataObat.count = dataObat.count + 1;
       dataObat.barang = currentList;
     } else {
-      dataObat.count = 1;
       dataObat.barang = [obat];
     }
 
@@ -79,10 +77,8 @@ class FarmasiStorage {
 
       currentList.removeWhere((e) => toRemove.contains(e));
 
-      dataObat.count = dataObat.count - 1;
       dataObat.barang = currentList;
     } else {
-      dataObat.count = 0;
       dataObat.barang = [];
     }
     clearCartStorage();

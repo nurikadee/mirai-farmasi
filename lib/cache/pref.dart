@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:medis/cache/storage.dart';
 import 'package:medis/model/response/login_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,7 +48,8 @@ class Pref {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(SharedPrefKey.userLogin);
     prefs.remove(SharedPrefKey.isLoggedInKey);
-    prefs.remove(SharedPrefKey.cart);
+
+    FarmasiStorage.clearCartStorage();
     return true;
   }
 }

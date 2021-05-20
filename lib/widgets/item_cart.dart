@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:medis/cache/storage.dart';
 import 'package:medis/model/response/obat_response.dart';
@@ -19,7 +20,7 @@ class _ItemObatState extends State<ItemCart> {
   final FocusNode fnDiskonPersen = FocusNode();
 
   TextEditingController jumlahKemasanController = TextEditingController();
-  TextEditingController diskonPersenController = TextEditingController();
+  TextEditingController keteranganController = TextEditingController();
 
   Barang obat = Barang();
   bool inACart = false;
@@ -33,12 +34,16 @@ class _ItemObatState extends State<ItemCart> {
 
   @override
   Widget build(BuildContext context) {
-    jumlahKemasanController.text = obat.jumlahKemasan.toString();
-    diskonPersenController.text = obat.diskonPersen.toString();
+    if (obat.jumlahKemasan != null || obat.jumlahKemasan != 0) {
+      jumlahKemasanController.text = obat.jumlahKemasan.toString();
+    }
+    if (obat.keterangan != null) {
+      keteranganController.text = obat.keterangan.toString();
+    }
 
     var subtotal = double.parse(obat.hargaKemasan) * obat.jumlahKemasan;
     var jumlahtotal = obat.jumlahKemasan * obat.isiPerKemasan;
-    var diskonRp = obat.diskonPersen * subtotal / 100;
+    //var diskonRp = obat.diskonPersen * subtotal / 100;
 
     MoneyFormatterSettings formatter = MoneyFormatterSettings();
     formatter.decimalSeparator = ",";
@@ -52,240 +57,262 @@ class _ItemObatState extends State<ItemCart> {
     MoneyFormatterOutput foHargaSatuan = MoneyFormatter(
             amount: double.parse(obat.hargaSatuanTerakhir), settings: formatter)
         .output;
-    MoneyFormatterOutput foDiskonRp =
-        MoneyFormatter(amount: diskonRp, settings: formatter).output;
+    //MoneyFormatterOutput foDiskonRp =
+    // MoneyFormatter(amount: diskonRp, settings: formatter).output;
 
-    return obat == null
-        ? Container()
-        : InkWell(
-            onTap: () {},
-            child: Card(
-              child: Container(
-                padding: EdgeInsets.all(15),
-                width: MediaQuery.of(context).size.width,
-                child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(
-                      FontAwesomeIcons.pills,
-                      size: 25,
-                      color: Colors.blue,
-                    ),
-                    title: Transform(
-                        transform: Matrix4.translationValues(-16, 0.0, 0.0),
-                        child: Text("${obat.kodeBarang} - ${obat.namaBarang}",
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textDirection: TextDirection.ltr,
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold))),
-                    subtitle: Transform(
-                        transform: Matrix4.translationValues(-16, 0.0, 0.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(obat.namaJenis,
+    return Dismissible(
+        key: Key(obat.idBarang.toString()),
+        onDismissed: (direction) {
+          FarmasiStorage.removeToCart(obat);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("${obat.kodeBarang.toString()} telah dihapus")));
+        },
+        child: obat == null
+            ? Container()
+            : InkWell(
+                onTap: () {},
+                child: Card(
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    width: MediaQuery.of(context).size.width,
+                    child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: Icon(
+                          FontAwesomeIcons.pills,
+                          size: 25,
+                          color: Colors.blue,
+                        ),
+                        title: Transform(
+                            transform: Matrix4.translationValues(-16, 0.0, 0.0),
+                            child: Text(
+                                "${obat.kodeBarang} - ${obat.namaBarang}",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 textDirection: TextDirection.ltr,
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold)),
-                            SizedBox(height: 10),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Expanded(
-                                  child: ListTile(
-                                    visualDensity: VisualDensity(
-                                        horizontal: 0, vertical: -2),
-                                    contentPadding: EdgeInsets.zero,
-                                    dense: true,
-                                    title: Text("Keterangan Kemasan",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold)),
-                                    subtitle: Text(
-                                        "Jumlah : ${obat.jumlahKemasan} \nKemasan : ${obat.namaKemasan} \nHarga : ${foHargaKemasan.nonSymbol}",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.normal)),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: ListTile(
-                                    visualDensity: VisualDensity(
-                                        horizontal: 0, vertical: -2),
-                                    contentPadding: EdgeInsets.zero,
-                                    dense: true,
-                                    title: Text("Keterangan Satuan",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold)),
-                                    subtitle: Text(
-                                        "Isi Per Kemasan : ${obat.isiPerKemasan} \nJumlah Total : $jumlahtotal \nSatuan : pcs \nHarga : ${foHargaSatuan.nonSymbol}",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.normal)),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            ListTile(
-                              visualDensity:
-                                  VisualDensity(horizontal: 0, vertical: -2),
-                              contentPadding: EdgeInsets.zero,
-                              dense: true,
-                              title: Text("Subtotal (sebelum diskon)",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold)),
-                              subtitle: Text("(Rp) : ${foSubtotal.nonSymbol}",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.normal)),
-                            ),
-                            ListTile(
-                              visualDensity:
-                                  VisualDensity(horizontal: 0, vertical: -2),
-                              contentPadding: EdgeInsets.zero,
-                              dense: true,
-                              title: Text("Keterangan Diskon",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold)),
-                              subtitle: Text(
-                                  "Diskon  %: ${obat.diskonPersen} \nDiskon (Rp) : ${foDiskonRp.nonSymbol}",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.normal)),
-                            ),
-                            SizedBox(height: 20),
-                            Form(
-                              child: Row(
-                                children: [
-                                  Expanded(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold))),
+                        subtitle: Transform(
+                            transform: Matrix4.translationValues(-16, 0.0, 0.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text(obat.namaJenis,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    textDirection: TextDirection.ltr,
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(height: 10),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Expanded(
                                       child: ListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    dense: true,
-                                    title: Text("Jumlah kemasan",
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 10)),
-                                    subtitle: Container(
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[200],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: TextFormField(
-                                          textAlign: TextAlign.center,
-                                          focusNode: fnJumlahKemasan,
-                                          controller: jumlahKemasanController,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            hintText: "0",
-                                            border: InputBorder.none,
-                                            hintStyle: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12),
-                                          ),
-                                        )),
-                                  )),
-                                  SizedBox(width: 3),
-                                  Expanded(
-                                    child: ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      dense: true,
-                                      title: Text("Diskon (%)",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 10)),
-                                      subtitle: Container(
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey[200],
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: TextFormField(
-                                            focusNode: fnDiskonPersen,
-                                            textAlign: TextAlign.center,
-                                            controller: diskonPersenController,
-                                            keyboardType: TextInputType.number,
-                                            textInputAction:
-                                                TextInputAction.done,
-                                            decoration: InputDecoration(
-                                              hintText: "0",
-                                              border: InputBorder.none,
-                                              hintStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12),
-                                            ),
-                                          )),
+                                        visualDensity: VisualDensity(
+                                            horizontal: 0, vertical: -2),
+                                        contentPadding: EdgeInsets.zero,
+                                        dense: true,
+                                        title: Text("Keterangan Kemasan",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold)),
+                                        subtitle: Text(
+                                            "Jumlah : ${obat.jumlahKemasan} \nKemasan : ${obat.namaKemasan} \nHarga : ${foHargaKemasan.nonSymbol}",
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.normal)),
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: 3),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        obat.jumlahKemasan = int.parse(
-                                            jumlahKemasanController.text != null
-                                                ? jumlahKemasanController.text
-                                                : 0);
-                                        obat.diskonPersen = int.parse(
-                                            diskonPersenController.text != null
-                                                ? diskonPersenController.text
-                                                : 0);
-                                      });
-                                    },
-                                    child: Container(
-                                        width: 60,
-                                        height: 50,
-                                        margin: EdgeInsets.only(top: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                    Expanded(
+                                      child: ListTile(
+                                        visualDensity: VisualDensity(
+                                            horizontal: 0, vertical: -2),
+                                        contentPadding: EdgeInsets.zero,
+                                        dense: true,
+                                        title: Text("Keterangan Satuan",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold)),
+                                        subtitle: Text(
+                                            "Isi Per Kemasan : ${obat.isiPerKemasan} \nJumlah Total : $jumlahtotal \nSatuan : pcs \nHarga : ${foHargaSatuan.nonSymbol}",
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.normal)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                ListTile(
+                                  visualDensity: VisualDensity(
+                                      horizontal: 0, vertical: -2),
+                                  contentPadding: EdgeInsets.zero,
+                                  dense: true,
+                                  title: Text("Subtotal (sebelum diskon)",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold)),
+                                  subtitle: Text(
+                                      "(Rp) : ${foSubtotal.nonSymbol}",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal)),
+                                ),
+                                ListTile(
+                                  visualDensity: VisualDensity(
+                                      horizontal: 0, vertical: -2),
+                                  contentPadding: EdgeInsets.zero,
+                                  dense: true,
+                                  title: Text("Keterangan",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold)),
+                                  subtitle: Text("${obat.keterangan}",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal)),
+                                ),
+                                // ListTile(
+                                //   visualDensity: VisualDensity(
+                                //       horizontal: 0, vertical: -2),
+                                //   contentPadding: EdgeInsets.zero,
+                                //   dense: true,
+                                //   title: Text("Keterangan Diskon",
+                                //       style: TextStyle(
+                                //           fontSize: 14,
+                                //           fontWeight: FontWeight.bold)),
+                                //   subtitle: Text(
+                                //       "Diskon  %: ${obat.diskonPersen} \nDiskon (Rp) : ${foDiskonRp.nonSymbol}",
+                                //       style: TextStyle(
+                                //           fontSize: 12,
+                                //           fontWeight: FontWeight.normal)),
+                                // ),
+                                SizedBox(height: 20),
+                                Form(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 1,
+                                          child: ListTile(
+                                            contentPadding: EdgeInsets.zero,
+                                            dense: true,
+                                            title: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 3.0),
+                                              child: Text("Jumlah kemasan",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 10)),
+                                            ),
+                                            subtitle: Container(
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey[200],
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: TextFormField(
+                                                  textAlign: TextAlign.center,
+                                                  focusNode: fnJumlahKemasan,
+                                                  controller:
+                                                      jumlahKemasanController,
+                                                  keyboardType: TextInputType
+                                                      .numberWithOptions(
+                                                          signed: true,
+                                                          decimal: false),
+                                                  textInputAction:
+                                                      TextInputAction.done,
+                                                  onEditingComplete: () {
+                                                    setState(() {
+                                                      obat.jumlahKemasan = int.parse(
+                                                          jumlahKemasanController
+                                                                      .text !=
+                                                                  null
+                                                              ? jumlahKemasanController
+                                                                  .text
+                                                              : 0);
+                                                    });
+                                                    FocusScope.of(context)
+                                                        .requestFocus(
+                                                            FocusNode());
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    hintText: "0",
+                                                    border: InputBorder.none,
+                                                    hintStyle: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12),
+                                                  ),
+                                                )),
+                                          )),
+                                      SizedBox(width: 3),
+                                      Expanded(
+                                        flex: 3,
+                                        child: ListTile(
+                                          contentPadding: EdgeInsets.zero,
+                                          dense: true,
+                                          title: Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 3.0),
+                                            child: Text("Keterangan",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 10)),
+                                          ),
+                                          subtitle: Container(
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[200],
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: TextFormField(
+                                                focusNode: fnDiskonPersen,
+                                                textAlign: TextAlign.center,
+                                                controller:
+                                                    keteranganController,
+                                                keyboardType: TextInputType
+                                                    .numberWithOptions(
+                                                        signed: true,
+                                                        decimal: false),
+                                                textInputAction:
+                                                    TextInputAction.done,
+                                                onEditingComplete: () {
+                                                  setState(() {
+                                                    obat.keterangan =
+                                                        keteranganController
+                                                                    .text !=
+                                                                null
+                                                            ? keteranganController
+                                                                .text
+                                                            : "";
+                                                  });
+                                                  FocusScope.of(context)
+                                                      .requestFocus(
+                                                          FocusNode());
+                                                },
+                                                decoration: InputDecoration(
+                                                  hintText: "Keterangan",
+                                                  border: InputBorder.none,
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12),
+                                                ),
+                                              )),
                                         ),
-                                        child: Center(
-                                          child: Text("Update",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12)),
-                                        )),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(width: 3),
-                                  InkWell(
-                                    onTap: () {
-                                      FarmasiStorage.removeToCart(obat);
-                                      return widget.callback();
-                                    },
-                                    child: Container(
-                                        width: 60,
-                                        height: 50,
-                                        margin: EdgeInsets.only(top: 10),
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Center(
-                                          child: Text("Delete",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12)),
-                                        )),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ))),
-              ),
-            ),
-          );
+                                )
+                              ],
+                            ))),
+                  ),
+                ),
+              ));
   }
 }

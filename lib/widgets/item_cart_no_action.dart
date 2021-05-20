@@ -26,7 +26,6 @@ class _ItemObatState extends State<ItemCartNoAction> {
   Widget build(BuildContext context) {
     var subtotal = double.parse(obat.hargaKemasan) * obat.jumlahKemasan;
     var jumlahtotal = obat.jumlahKemasan * obat.isiPerKemasan;
-    var diskonRp = obat.diskonPersen * subtotal / 100;
 
     MoneyFormatterSettings formatter = MoneyFormatterSettings();
     formatter.decimalSeparator = ",";
@@ -40,14 +39,13 @@ class _ItemObatState extends State<ItemCartNoAction> {
     MoneyFormatterOutput foHargaSatuan = MoneyFormatter(
             amount: double.parse(obat.hargaSatuanTerakhir), settings: formatter)
         .output;
-    MoneyFormatterOutput foDiskonRp =
-        MoneyFormatter(amount: diskonRp, settings: formatter).output;
 
     return obat == null
         ? Container()
         : InkWell(
             onTap: () {},
             child: Card(
+              color: Colors.amber[50],
               elevation: 0.5,
               child: Container(
                 padding: EdgeInsets.all(15),
@@ -139,17 +137,15 @@ class _ItemObatState extends State<ItemCartNoAction> {
                                   VisualDensity(horizontal: 0, vertical: -2),
                               contentPadding: EdgeInsets.zero,
                               dense: true,
-                              title: Text("Keterangan Diskon",
+                              title: Text("Keterangan",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold)),
-                              subtitle: Text(
-                                  "Diskon  %: ${obat.diskonPersen} \nDiskon (Rp) : ${foDiskonRp.nonSymbol}",
+                              subtitle: Text("${obat.keterangan}",
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.normal)),
                             ),
-                            SizedBox(height: 20),
                           ],
                         ))),
               ),

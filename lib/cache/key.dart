@@ -3,5 +3,4 @@ class SharedPrefKey {
   static var userLogin = "userLogin";
   static var tokenPushNotif = "tokenPushNotif";
   static var deviceId = "deviceId";
-  static var cart = "cart";
 }
