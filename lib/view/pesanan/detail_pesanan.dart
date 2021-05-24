@@ -63,11 +63,11 @@ class _PesanState extends State<PesananDetail> with PesananViewInterface {
   }
 
   void checkIsLoggedIn() {
-    Pref.checkIsLoggedIn().then((seen) {
-      Pref.getUserLogin().then((value) {
-        dataUser = value;
-      });
-    });
+    if (Pref.checkIsLoggedIn()) {
+      if (Pref.checkIsLoggedIn()) {
+        dataUser = Pref.getUserLogin();
+      }
+    }
   }
 
   updateDetailHarga() {

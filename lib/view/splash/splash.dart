@@ -63,20 +63,20 @@ class _SplashState extends State<Splash> implements SplashViewInterface {
   }
 
   void checkIsLoggedIn() {
-    Pref.checkIsLoggedIn().then((seen) => {
-          if (seen)
-            {
-              setState(() {
-                isLoggedIn = true;
-              })
-            }
-          else
-            {
-              setState(() {
-                isLoggedIn = false;
-              })
-            }
-        });
+    //if (Pref.checkIsLoggedIn() != null) {
+    setState(() {
+      isLoggedIn = Pref.checkIsLoggedIn();
+    });
+    //}
+    // if (Pref.checkIsLoggedIn()) {
+    //   setState(() {
+    //     isLoggedIn = true;
+    //   });
+    // } else {
+    //   setState(() {
+    //     isLoggedIn = false;
+    //   });
+    // }
   }
 
   @override
@@ -94,7 +94,7 @@ class _SplashState extends State<Splash> implements SplashViewInterface {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'MIRAI FARMASI',
+                        'MIRAI SIMFARSAA',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 30,

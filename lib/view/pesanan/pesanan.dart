@@ -289,7 +289,7 @@ class _PesanState extends State<Pesanan> with PesananViewInterface {
                         InkWell(
                           onTap: () {
                             developer.log("${dataCart.toJson().toString()}");
-                            FarmasiStorage.addAllToCart(dataCart);
+                            //FarmasiStorage.addAllToCart(dataCart);
 
                             PesananRequest pesananRequest = PesananRequest();
                             pesananRequest.idSupplier =

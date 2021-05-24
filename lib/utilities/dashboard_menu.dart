@@ -19,7 +19,7 @@ var obat = DashboardMenu(
 
 var pengadaan = DashboardMenu(
     directTo: null,
-    title: "Pengadaan",
+    title: "Penerimaan",
     icon: "assets/images/ic_pharmacy.png",
     badge: false);
 

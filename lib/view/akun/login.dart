@@ -36,9 +36,9 @@ class _LoginState extends State<Login>
   void onLifecycleEvent(LifecycleEvent event) {
     debugPrint(event.toString());
     if (event == LifecycleEvent.active) {
-      Pref.checkIsLoggedIn().then((value) {
-        if (value) Navigator.pop(context);
-      });
+      if (Pref.checkIsLoggedIn()) {
+        Navigator.pop(context);
+      }
     }
   }
 

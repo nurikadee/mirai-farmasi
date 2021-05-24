@@ -16,9 +16,13 @@ import 'package:medis/model/response/user_farmasi_response.dart';
 class PesananService {
   static Future<dynamic> getListUser() async {
     var header;
-    await Pref.getUserLogin().then((value) {
+    var value = Pref.getUserLogin();
+    if (value != null) {
       header = APiSettings.getHeader("Bearer ${value.user.authKey}");
-    });
+    }
+    // await Pref.getUserLogin().then((value) {
+    //   header = APiSettings.getHeader("Bearer ${value.user.authKey}");
+    // });
 
     try {
       final response =
@@ -52,9 +56,13 @@ class PesananService {
 
   static Future<dynamic> getListSupplier() async {
     var header;
-    await Pref.getUserLogin().then((value) {
+    var value = Pref.getUserLogin();
+    if (value != null) {
       header = APiSettings.getHeader("Bearer ${value.user.authKey}");
-    });
+    }
+    // await Pref.getUserLogin().then((value) {
+    //   header = APiSettings.getHeader("Bearer ${value.user.authKey}");
+    // });
 
     try {
       final response =
@@ -85,9 +93,13 @@ class PesananService {
 
   static Future<dynamic> getListPesanan() async {
     var header;
-    await Pref.getUserLogin().then((value) {
+    var value = Pref.getUserLogin();
+    if (value != null) {
       header = APiSettings.getHeader("Bearer ${value.user.authKey}");
-    });
+    }
+    // await Pref.getUserLogin().then((value) {
+    //   header = APiSettings.getHeader("Bearer ${value.user.authKey}");
+    // });
 
     try {
       final response =
@@ -118,9 +130,13 @@ class PesananService {
 
   static Future<dynamic> addPesanan(PesananRequest pesananRequest) async {
     var header;
-    await Pref.getUserLogin().then((value) {
+    var value = Pref.getUserLogin();
+    if (value != null) {
       header = APiSettings.getHeader("Bearer ${value.user.authKey}");
-    });
+    }
+    // await Pref.getUserLogin().then((value) {
+    //   header = APiSettings.getHeader("Bearer ${value.user.authKey}");
+    // });
 
     try {
       developer.log("${pesananRequest.toJson()}",

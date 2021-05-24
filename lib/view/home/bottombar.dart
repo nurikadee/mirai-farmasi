@@ -13,6 +13,9 @@ class _BottomBarState extends State<BottomBar> {
       key: PageStorageKey('Home'),
     ),
     Profile(
+      key: PageStorageKey('Histori Pesanan'),
+    ),
+    Profile(
       key: PageStorageKey('Profil'),
     ),
   ];

@@ -50,20 +50,18 @@ class _HomeState extends State<Home> with LifecycleAware, LifecycleMixin {
   }
 
   void checkIsLoggedIn() {
-    Pref.checkIsLoggedIn().then((seen) {
+    if (Pref.checkIsLoggedIn()) {
       setState(() {
-        isLoggedIn = seen;
+        isLoggedIn = Pref.checkIsLoggedIn();
       });
 
-      if (seen) {
-        Pref.getUserLogin().then((value) {
-          dataUser = value;
-          nama = dataUser.pegawai.namaLengkap;
-        });
-      } else {
-        nama = "User Public";
+      if (Pref.checkIsLoggedIn()) {
+        dataUser = Pref.getUserLogin();
+        nama = dataUser.pegawai.namaLengkap;
       }
-    });
+    } else {
+      nama = "User Public";
+    }
   }
 
   @override

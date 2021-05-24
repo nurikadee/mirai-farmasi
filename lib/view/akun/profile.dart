@@ -31,15 +31,15 @@ class _ProfileState extends State<Profile> with LifecycleAware, LifecycleMixin {
   }
 
   void checkIsLoggedIn() {
-    Pref.checkIsLoggedIn().then((seen) {
+    if (Pref.checkIsLoggedIn()) {
       setState(() {
-        isLoggedIn = seen;
+        isLoggedIn = Pref.checkIsLoggedIn();
       });
 
-      if (seen) {
-        Pref.getUserLogin().then((value) => dataUser = value);
+      if (Pref.checkIsLoggedIn()) {
+        dataUser = Pref.getUserLogin();
       }
-    });
+    }
   }
 
   @override

@@ -28,6 +28,7 @@ class _FarmasiState extends State<Farmasi> {
     setUpFirebase();
     initPlatformState();
     FarmasiStorage.initStorage();
+    Pref.initStorage();
   }
 
   setUpFirebase() {

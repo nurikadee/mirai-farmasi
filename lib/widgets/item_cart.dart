@@ -36,12 +36,15 @@ class _ItemObatState extends State<ItemCart> {
   Widget build(BuildContext context) {
     if (obat.jumlahKemasan != null || obat.jumlahKemasan != 0) {
       jumlahKemasanController.text = obat.jumlahKemasan.toString();
+    } else {
+      jumlahKemasanController.text = "0";
     }
     if (obat.keterangan != null) {
       keteranganController.text = obat.keterangan.toString();
     }
 
-    var subtotal = double.parse(obat.hargaKemasan) * obat.jumlahKemasan;
+    print("Harga Kemasan : ${obat.hargaKemasan}");
+    var subtotal = double.parse(obat.hargaKemasan);
     var jumlahtotal = obat.jumlahKemasan * obat.isiPerKemasan;
     //var diskonRp = obat.diskonPersen * subtotal / 100;
 

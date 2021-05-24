@@ -1,53 +1,83 @@
 import 'dart:convert';
 
+import 'package:localstorage/localstorage.dart';
 import 'package:medis/cache/storage.dart';
 import 'package:medis/model/response/login_response.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'key.dart';
 
 class Pref {
-  static Future<bool> checkIsLoggedIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    return (prefs.getBool(SharedPrefKey.isLoggedInKey) ?? false);
+  static LocalStorage sharePref;
+
+  static initStorage() {
+    sharePref = FarmasiStorage.storage;
   }
 
-  static Future<DataUser> getUserLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    var pref = json.decode(prefs.getString(SharedPrefKey.userLogin));
-    return DataUser.fromJson(await pref);
+  static clearStorage() async {
+    await sharePref.clear();
   }
 
-  static setUserLogin(value) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString(SharedPrefKey.userLogin, json.encode(value));
-    prefs.setBool(SharedPrefKey.isLoggedInKey, true);
+  static bool checkIsLoggedIn() {
+    if (sharePref.getItem(SharedPrefKey.isLoggedInKey) != null) {
+      return sharePref.getItem(SharedPrefKey.isLoggedInKey);
+    } else {
+      return false;
+    }
   }
 
-  static setTokenFirebase(value) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString(SharedPrefKey.tokenPushNotif, value);
+  static DataUser getUserLogin() {
+    if (sharePref.getItem(SharedPrefKey.userLogin) != null) {
+      var data = json.decode(sharePref.getItem(SharedPrefKey.userLogin));
+      return DataUser.fromJson(data);
+    } else {
+      return null;
+    }
   }
 
-  static Future<String> getTokenFirebase() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(SharedPrefKey.tokenPushNotif);
+  static setUserLogin(DataUser value) async {
+    remove();
+    bool isLoggedIn = true;
+    sharePref.setItem(SharedPrefKey.userLogin, json.encode(value));
+    sharePref.setItem(SharedPrefKey.isLoggedInKey, isLoggedIn);
   }
 
-  static setDeviceId(value) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString(SharedPrefKey.deviceId, value);
+  static setTokenFirebase(String value) async {
+    clearToken();
+    sharePref.setItem(SharedPrefKey.tokenPushNotif, value);
   }
 
-  static Future<String> getDeviceId() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(SharedPrefKey.deviceId);
+  static String getTokenFirebase() {
+    if (sharePref.getItem(SharedPrefKey.tokenPushNotif) != null) {
+      return sharePref.getItem(SharedPrefKey.tokenPushNotif);
+    } else {
+      return "";
+    }
   }
 
-  static Future<bool> remove() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove(SharedPrefKey.userLogin);
-    prefs.remove(SharedPrefKey.isLoggedInKey);
+  static setDeviceId(String value) async {
+    clearDeviceId();
+    sharePref.setItem(SharedPrefKey.deviceId, value);
+  }
+
+  static String getDeviceId() {
+    if (sharePref.getItem(SharedPrefKey.deviceId) != null) {
+      return sharePref.getItem(SharedPrefKey.deviceId);
+    } else {
+      return "";
+    }
+  }
+
+  static clearToken() async {
+    await sharePref.deleteItem(SharedPrefKey.tokenPushNotif);
+  }
+
+  static clearDeviceId() async {
+    await sharePref.deleteItem(SharedPrefKey.deviceId);
+  }
+
+  static bool remove() {
+    sharePref.deleteItem(SharedPrefKey.isLoggedInKey);
+    sharePref.deleteItem(SharedPrefKey.userLogin);
 
     FarmasiStorage.clearCartStorage();
     return true;

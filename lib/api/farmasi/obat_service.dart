@@ -11,9 +11,13 @@ import 'package:medis/model/response/obat_response.dart';
 class ObatService {
   static Future<dynamic> getListObat() async {
     var header;
-    await Pref.getUserLogin().then((value) {
+    var value = Pref.getUserLogin();
+    if (value != null) {
       header = APiSettings.getHeader("Bearer ${value.user.authKey}");
-    });
+    }
+    // await .then((value) {
+    //
+    // });
 
     try {
       final response =

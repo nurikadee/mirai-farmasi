@@ -41,8 +41,8 @@ class AuthPresenter extends Presenter<AuthViewModel, AuthViewInterface> {
   }
 
   Future<void> saveToken(String username) async {
-    var deviceId = await Pref.getDeviceId().then((value) => value);
-    var token = await Pref.getTokenFirebase().then((value) => value);
+    var deviceId = Pref.getDeviceId();
+    var token = Pref.getTokenFirebase();
 
     var request =
         SaveTokenRequest(deviceId: deviceId, username: username, token: token);

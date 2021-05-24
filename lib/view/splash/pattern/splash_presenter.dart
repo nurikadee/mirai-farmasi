@@ -19,15 +19,14 @@ class SplashPresenter extends Presenter<SplashViewModel, SplashViewInterface> {
 
   Future<void> saveToken() async {
     var username = "0";
-    await Pref.checkIsLoggedIn().then((value) async {
-      if (value) {
-        username =
-            await Pref.getUserLogin().then((value) => value.user.username);
-      }
-    });
+
+    if (Pref.checkIsLoggedIn()) {
+      username = Pref.getUserLogin().user.username;
+    }
+
     try {
-      var deviceId = await Pref.getDeviceId().then((value) => value);
-      var token = await Pref.getTokenFirebase().then((value) => value);
+      var deviceId = Pref.getDeviceId();
+      var token = Pref.getTokenFirebase();
 
       var request = SaveTokenRequest(
           deviceId: deviceId, username: username, token: token);
