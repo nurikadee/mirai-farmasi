@@ -8,6 +8,8 @@ import 'package:medis/model/request/pesanan_request.dart';
 import 'package:medis/model/response/add_pesanan_response.dart';
 import 'package:medis/model/response/login_response.dart';
 import 'package:medis/model/response/obat_response.dart';
+import 'package:medis/model/response/pengadaan_detail_response.dart';
+import 'package:medis/model/response/pengadaan_response.dart';
 import 'package:medis/model/response/supplier_response.dart';
 import 'package:medis/model/response/user_farmasi_response.dart';
 import 'package:medis/view/pesanan/pattern/pesanan_presenter.dart';
@@ -469,8 +471,8 @@ class _PesanState extends State<PesananDetail> with PesananViewInterface {
               ),
             ));
       },
-      presenter:
-          PesananPresenter(PesananViewModel(), this, PesananPage.DetailPesanan),
+      presenter: PesananPresenter(
+          PesananViewModel(), this, PesananPage.DetailPesanan, null),
     );
   }
 
@@ -520,6 +522,13 @@ class _PesanState extends State<PesananDetail> with PesananViewInterface {
       showMessage(addPesananResponse.message, true);
     }
   }
+
+  @override
+  void showRiwayatPesanan(PengadaanResponse pengadaanResponse) {}
+
+  @override
+  void showDetailRiwayatPesanan(
+      PengadaanDetailResponse pengadaanDetailResponse) {}
 
   Widget user(UserFarmasi value) {
     return Padding(

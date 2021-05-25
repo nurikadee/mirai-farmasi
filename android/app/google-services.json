@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "345834209279",
-    "project_id": "mirai-medis",
-    "storage_bucket": "mirai-medis.appspot.com"
+    "project_number": "623486145901",
+    "project_id": "mirai-farmasi",
+    "storage_bucket": "mirai-farmasi.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:345834209279:android:6cf15cbf92fd7d27ce71ca",
+        "mobilesdk_app_id": "1:623486145901:android:b76b1c64f4632b3ae23664",
         "android_client_info": {
-          "package_name": "com.rsudaa.pelayanananonline"
+          "package_name": "com.rsudaa.farmasi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "345834209279-c33repfopnn1n85467k677gbc04qcj06.apps.googleusercontent.com",
+          "client_id": "623486145901-83m5d64b8habmmasvtqod6bpn61jetu9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA19uQsQiAPCRfcfqtjEJvtu8-r7bNwQNE"
+          "current_key": "AIzaSyALEN7_Ha7TjVPM-map0VuwrPMfe4MIQ6U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "345834209279-c33repfopnn1n85467k677gbc04qcj06.apps.googleusercontent.com",
+              "client_id": "623486145901-83m5d64b8habmmasvtqod6bpn61jetu9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "623486145901-qj62umn5nbn84tjo5e4t5goof05nrmhl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rsudaa.farmasi"
+              }
             }
           ]
         }

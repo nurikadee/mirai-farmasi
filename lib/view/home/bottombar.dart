@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medis/view/akun/profile.dart';
 import 'package:medis/view/home/home.dart';
+import 'package:medis/view/pesanan/riwayat_pesanan.dart';
 
 class BottomBar extends StatefulWidget {
   @override
@@ -11,6 +12,9 @@ class _BottomBarState extends State<BottomBar> {
   final List<Widget> pages = [
     Home(
       key: PageStorageKey('Home'),
+    ),
+    RiwayatPesanan(
+      key: PageStorageKey('Riwayat Pesanan'),
     ),
     Profile(
       key: PageStorageKey('Profil'),
@@ -34,6 +38,8 @@ class _BottomBarState extends State<BottomBar> {
         showUnselectedLabels: true,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.history), label: "Riwayat Pesanan"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profil"),
         ],
       );

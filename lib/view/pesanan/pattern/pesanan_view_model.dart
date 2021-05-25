@@ -1,5 +1,7 @@
 import 'package:medis/model/response/add_pesanan_response.dart';
 import 'package:medis/model/response/base_response.dart';
+import 'package:medis/model/response/pengadaan_detail_response.dart';
+import 'package:medis/model/response/pengadaan_response.dart';
 import 'package:medis/model/response/supplier_response.dart';
 import 'package:medis/model/response/user_farmasi_response.dart';
 import 'package:mvvm_builder/mvvm_builder.dart';
@@ -12,4 +14,8 @@ class PesananViewModel extends MVVMModel {
   UserFarmasiResponse userFarmasiResponse;
 
   AddPesananResponse addPesananResponse;
+
+  PengadaanResponse pengadaanResponse;
+
+  PengadaanDetailResponse pengadaanDetailResponse;
 }

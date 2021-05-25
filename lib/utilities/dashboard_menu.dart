@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medis/view/obat/obat.dart';
+import 'package:medis/view/penerimaan/riwayat_penerimaan.dart';
 import 'package:medis/view/pesanan/pesanan.dart';
 
 class DashboardMenu {
@@ -18,9 +19,9 @@ var obat = DashboardMenu(
     badge: false);
 
 var pengadaan = DashboardMenu(
-    directTo: null,
-    title: "Pengadaan",
-    icon: "assets/images/ic_pharmacy.png",
+    directTo: RiwayatPenerimaan(),
+    title: "Penerimaan",
+    icon: "assets/images/ic_bill.png",
     badge: false);
 
 var orders = DashboardMenu(
@@ -32,7 +33,7 @@ var orders = DashboardMenu(
 var tracking = DashboardMenu(
     directTo: null,
     title: "Tracking",
-    icon: "assets/images/ic_ambulance.png",
+    icon: "assets/images/ic_tracking.png",
     badge: false);
 
 final menu = [obat, pengadaan, orders, tracking];

@@ -7,7 +7,7 @@ import 'package:medis/model/response/obat_response.dart';
 import 'package:medis/view/obat/pattern/obat_presenter.dart';
 import 'package:medis/view/obat/pattern/obat_view_interface.dart';
 import 'package:medis/view/obat/pattern/obat_view_model.dart';
-import 'package:medis/view/obat/search_page.dart';
+import 'package:medis/utilities/search_page.dart';
 import 'package:medis/view/pesanan/pesanan.dart';
 import 'package:medis/widgets/item_obat.dart';
 import 'package:mvvm_builder/mvvm_builder.dart';

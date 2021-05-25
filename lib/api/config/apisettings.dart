@@ -1,5 +1,5 @@
 class APiSettings {
-  static var baseUrlFarmasi = "http://192.168.1.185/mirai-farmasi/v1/";
+  static var baseUrlFarmasi = "http://192.168.1.186/mirai-farmasi/v1/";
 
   static var errorMsg =
       "Terjadi kesalahan pada server, mohon ulangi beberapa saat lagi";

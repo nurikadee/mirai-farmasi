@@ -62,6 +62,7 @@ class Pengadaan {
   String tglSp;
   String noSp;
   int idSupplier;
+  String namaSupplier;
   String tipePembelian;
   String catatan;
   bool isCito;
@@ -101,6 +102,7 @@ class Pengadaan {
       this.tglSp,
       this.noSp,
       this.idSupplier,
+      this.namaSupplier,
       this.tipePembelian,
       this.catatan,
       this.isCito,
@@ -142,6 +144,8 @@ class Pengadaan {
     if (json["tgl_sp"] is String) this.tglSp = json["tgl_sp"];
     if (json["no_sp"] is String) this.noSp = json["no_sp"];
     if (json["id_supplier"] is int) this.idSupplier = json["id_supplier"];
+    if (json["nama_supplier"] is String)
+      this.namaSupplier = json["nama_supplier"];
     if (json["tipe_pembelian"] is String)
       this.tipePembelian = json["tipe_pembelian"];
     if (json["catatan"] is String) this.catatan = json["catatan"];
@@ -192,6 +196,7 @@ class Pengadaan {
     data["tgl_sp"] = this.tglSp;
     data["no_sp"] = this.noSp;
     data["id_supplier"] = this.idSupplier;
+    data["nama_supplier"] = this.namaSupplier;
     data["tipe_pembelian"] = this.tipePembelian;
     data["catatan"] = this.catatan;
     data["is_cito"] = this.isCito;

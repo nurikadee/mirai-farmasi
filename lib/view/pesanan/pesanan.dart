@@ -5,6 +5,8 @@ import 'package:medis/cache/storage.dart';
 import 'package:medis/model/request/pesanan_request.dart';
 import 'package:medis/model/response/add_pesanan_response.dart';
 import 'package:medis/model/response/obat_response.dart';
+import 'package:medis/model/response/pengadaan_detail_response.dart';
+import 'package:medis/model/response/pengadaan_response.dart';
 import 'package:medis/model/response/supplier_response.dart';
 import 'package:medis/model/response/user_farmasi_response.dart';
 import 'package:medis/utilities/utils.dart';
@@ -361,7 +363,7 @@ class _PesanState extends State<Pesanan> with PesananViewInterface {
                   ))));
       },
       presenter:
-          PesananPresenter(PesananViewModel(), this, PesananPage.Pesanan),
+          PesananPresenter(PesananViewModel(), this, PesananPage.Pesanan, null),
     );
   }
 
@@ -422,6 +424,13 @@ class _PesanState extends State<Pesanan> with PesananViewInterface {
 
   @override
   void afterAddPesanan(AddPesananResponse addPesananResponse) {}
+
+  @override
+  void showRiwayatPesanan(PengadaanResponse pengadaanResponse) {}
+
+  @override
+  void showDetailRiwayatPesanan(
+      PengadaanDetailResponse pengadaanDetailResponse) {}
 
   @override
   void setState(fn) {

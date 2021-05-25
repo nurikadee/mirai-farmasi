@@ -94,7 +94,7 @@ class _SplashState extends State<Splash> implements SplashViewInterface {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'MIRAI FARMASI',
+                        'MIRAI SIMFARSAA',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 30,

@@ -29,10 +29,10 @@ class _HeaderInnerState extends State<HeaderInner> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "MIRAI FARMASI",
+                            "MIRAI SIMFARSAA",
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 25,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),

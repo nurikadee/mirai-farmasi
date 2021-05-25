@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medis/model/response/add_pesanan_response.dart';
+import 'package:medis/model/response/pengadaan_detail_response.dart';
+import 'package:medis/model/response/pengadaan_response.dart';
 import 'package:medis/model/response/supplier_response.dart';
 import 'package:medis/model/response/user_farmasi_response.dart';
 import 'package:medis/view/home/bottombar.dart';
@@ -260,8 +262,8 @@ class _ThankYouState extends State<ThankYou> with PesananViewInterface {
               ),
             ));
       },
-      presenter:
-          PesananPresenter(PesananViewModel(), this, PesananPage.ThankYou),
+      presenter: PesananPresenter(
+          PesananViewModel(), this, PesananPage.ThankYou, null),
     );
   }
 
@@ -333,6 +335,13 @@ class _ThankYouState extends State<ThankYou> with PesananViewInterface {
 
   @override
   void afterAddPesanan(AddPesananResponse addPesananResponse) {}
+
+  @override
+  void showRiwayatPesanan(PengadaanResponse pengadaanResponse) {}
+
+  @override
+  void showDetailRiwayatPesanan(
+      PengadaanDetailResponse pengadaanDetailResponse) {}
 
   @override
   void setState(fn) {

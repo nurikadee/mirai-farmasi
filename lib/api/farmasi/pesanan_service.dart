@@ -6,9 +6,11 @@ import 'package:http/http.dart' as http;
 import 'package:medis/api/config/apisettings.dart';
 import 'package:medis/api/config/endpoint.dart';
 import 'package:medis/cache/pref.dart';
+import 'package:medis/model/request/pesanan_by_id_request.dart';
 import 'package:medis/model/request/pesanan_request.dart';
 import 'package:medis/model/response/add_pesanan_response.dart';
 import 'package:medis/model/response/base_response.dart';
+import 'package:medis/model/response/pengadaan_detail_response.dart';
 import 'package:medis/model/response/pengadaan_response.dart';
 import 'package:medis/model/response/supplier_response.dart';
 import 'package:medis/model/response/user_farmasi_response.dart';
@@ -143,6 +145,50 @@ class PesananService {
         case 200:
           final body = jsonDecode(response.body);
           return AddPesananResponse.fromJson(body);
+          break;
+        case 400:
+          final body = jsonDecode(response.body);
+          return BaseResponse.fromJson(body);
+          break;
+        default:
+          return BaseResponse(message: APiSettings.errorMsg);
+          break;
+      }
+    } on SocketException {
+      return BaseResponse(message: APiSettings.errorNetwork);
+    }
+  }
+
+  static getDetailRiwayatPesanan(int idPesanan) async {
+    var header;
+    await Pref.getUserLogin().then((value) {
+      header = APiSettings.getHeader("Bearer ${value.user.authKey}");
+    });
+
+    try {
+      PesananByIdRequest request = PesananByIdRequest();
+      request.idPengadaan = idPesanan.toString();
+
+      final response = await http
+          .post(EndpointMedis.pesananById,
+              headers: header, body: request.toJson())
+          .timeout(
+        Duration(seconds: 20),
+        onTimeout: () {
+          return null;
+        },
+      );
+
+      developer.log("${request.toJson()}",
+          name: "Request ${EndpointMedis.pesananById}");
+
+      developer.log("${jsonDecode(response.body)}",
+          name: "Response ${EndpointMedis.pesananById}");
+
+      switch (response.statusCode) {
+        case 200:
+          final body = jsonDecode(response.body);
+          return PengadaanDetailResponse.fromJson(body);
           break;
         case 400:
           final body = jsonDecode(response.body);
