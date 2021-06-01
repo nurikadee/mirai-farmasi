@@ -17,4 +17,6 @@ class EndpointMedis {
       Uri.parse(APiSettings.baseUrlFarmasi + "penerimaan/all");
   static var penerimaanById =
       Uri.parse(APiSettings.baseUrlFarmasi + "penerimaan/by-id");
+  static var addPenerimaan =
+      Uri.parse(APiSettings.baseUrlFarmasi + "penerimaan/add-penerimaan");
 }

@@ -30,6 +30,14 @@ class _ItemObatState extends State<ItemCart> {
     super.initState();
     obat = widget.obat;
     inACart = FarmasiStorage.checkBarangOnCart(obat);
+
+    fnJumlahKemasan.addListener(() {
+      if (fnJumlahKemasan.hasFocus) {
+        if (obat.jumlahKemasan == 0) {
+          jumlahKemasanController.clear();
+        }
+      }
+    });
   }
 
   @override
@@ -43,7 +51,6 @@ class _ItemObatState extends State<ItemCart> {
 
     var subtotal = double.parse(obat.hargaKemasan) * obat.jumlahKemasan;
     var jumlahtotal = obat.jumlahKemasan * obat.isiPerKemasan;
-    //var diskonRp = obat.diskonPersen * subtotal / 100;
 
     MoneyFormatterSettings formatter = MoneyFormatterSettings();
     formatter.decimalSeparator = ",";
@@ -57,8 +64,6 @@ class _ItemObatState extends State<ItemCart> {
     MoneyFormatterOutput foHargaSatuan = MoneyFormatter(
             amount: double.parse(obat.hargaSatuanTerakhir), settings: formatter)
         .output;
-    //MoneyFormatterOutput foDiskonRp =
-    // MoneyFormatter(amount: diskonRp, settings: formatter).output;
 
     return Dismissible(
         key: Key(obat.idBarang.toString()),
@@ -175,21 +180,6 @@ class _ItemObatState extends State<ItemCart> {
                                           fontSize: 12,
                                           fontWeight: FontWeight.normal)),
                                 ),
-                                // ListTile(
-                                //   visualDensity: VisualDensity(
-                                //       horizontal: 0, vertical: -2),
-                                //   contentPadding: EdgeInsets.zero,
-                                //   dense: true,
-                                //   title: Text("Keterangan Diskon",
-                                //       style: TextStyle(
-                                //           fontSize: 14,
-                                //           fontWeight: FontWeight.bold)),
-                                //   subtitle: Text(
-                                //       "Diskon  %: ${obat.diskonPersen} \nDiskon (Rp) : ${foDiskonRp.nonSymbol}",
-                                //       style: TextStyle(
-                                //           fontSize: 12,
-                                //           fontWeight: FontWeight.normal)),
-                                // ),
                                 SizedBox(height: 20),
                                 Form(
                                   child: Row(
@@ -202,7 +192,7 @@ class _ItemObatState extends State<ItemCart> {
                                             title: Padding(
                                               padding: const EdgeInsets.only(
                                                   bottom: 3.0),
-                                              child: Text("Jumlah kemasan",
+                                              child: Text("Jumlah",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       color: Colors.black,

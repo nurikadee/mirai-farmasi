@@ -7,6 +7,8 @@ import 'package:medis/api/config/apisettings.dart';
 import 'package:medis/api/config/endpoint.dart';
 import 'package:medis/cache/pref.dart';
 import 'package:medis/model/request/penerimaan_by_id_request.dart';
+import 'package:medis/model/request/penerimaan_request.dart';
+import 'package:medis/model/response/add_penerimaan_response.dart';
 import 'package:medis/model/response/base_response.dart';
 import 'package:medis/model/response/penerimaan_detail_response.dart';
 import 'package:medis/model/response/penerimaan_response.dart';
@@ -75,6 +77,48 @@ class PenerimaanService {
         case 200:
           final body = jsonDecode(response.body);
           return PenerimaanDetailResponse.fromJson(body);
+          break;
+        case 400:
+          final body = jsonDecode(response.body);
+          return BaseResponse.fromJson(body);
+          break;
+        default:
+          return BaseResponse(message: APiSettings.errorMsg);
+          break;
+      }
+    } on SocketException {
+      return BaseResponse(message: APiSettings.errorNetwork);
+    }
+  }
+
+  static Future<dynamic> addPenerimaan(
+      PenerimaanRequest penerimaanRequest) async {
+    var header;
+    await Pref.getUserLogin().then((value) {
+      header = APiSettings.getHeader("Bearer ${value.user.authKey}");
+    });
+
+    try {
+      developer.log("${penerimaanRequest.toJson()}",
+          name: "Request ${EndpointMedis.addPenerimaan}");
+
+      final response = await http
+          .post(EndpointMedis.addPenerimaan,
+              headers: header, body: json.encode(penerimaanRequest))
+          .timeout(
+        Duration(seconds: 20),
+        onTimeout: () {
+          return null;
+        },
+      );
+
+      developer.log("${jsonDecode(response.body)}",
+          name: "Response ${EndpointMedis.addPesanan}");
+
+      switch (response.statusCode) {
+        case 200:
+          final body = jsonDecode(response.body);
+          return AddPenerimaanResponse.fromJson(body);
           break;
         case 400:
           final body = jsonDecode(response.body);

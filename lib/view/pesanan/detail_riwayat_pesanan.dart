@@ -12,6 +12,7 @@ import 'package:medis/utilities/utils.dart';
 import 'package:medis/view/pesanan/pattern/pesanan_presenter.dart';
 import 'package:medis/view/pesanan/pattern/pesanan_view_interface.dart';
 import 'package:medis/view/pesanan/pattern/pesanan_view_model.dart';
+import 'package:medis/widgets/item_terima_pesanan.dart';
 import 'package:medis/widgets/widget_rounded_input_field.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:mvvm_builder/mvvm_builder.dart';
@@ -303,19 +304,11 @@ class _PesanState extends State<RiwayatPesananDetail>
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: listPengadaanDetail.length,
                             itemBuilder: (BuildContext ctxt, int index) {
-                              var pengadaanDetail = listPengadaanDetail[index];
-                              return Card(
-                                elevation: 0.5,
-                                child: ListTile(
-                                  title: Text(
-                                    "${index + 1}# - ${pengadaanDetail.barang.namaBarang}",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  trailing: Text(
-                                      "${double.parse(pengadaanDetail.jumlahTotal).toInt()} ${pengadaanDetail.barang.namaKemasan}"),
-                                ),
-                              );
+                              PengadaanDetail pengadaanDetail =
+                                  listPengadaanDetail[index];
+                              return ItemTerimaPesanan(
+                                  pengadaanDetail: pengadaanDetail,
+                                  index: index);
                             }),
                         InkWell(
                           onTap: () {
@@ -524,7 +517,7 @@ class _PesanState extends State<RiwayatPesananDetail>
                                           materai = value;
                                         });
                                       },
-                                      title: Text('3.000'),
+                                      title: Text('6.000'),
                                     ),
                                   ),
                                   Flexible(
@@ -537,7 +530,7 @@ class _PesanState extends State<RiwayatPesananDetail>
                                           materai = value;
                                         });
                                       },
-                                      title: Text('6.000'),
+                                      title: Text('10.000'),
                                     ),
                                   ),
                                 ],

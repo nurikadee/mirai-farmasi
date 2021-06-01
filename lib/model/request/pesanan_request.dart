@@ -16,7 +16,7 @@ class PesananRequest {
   int idPptk;
   String jenis;
   String catatan;
-  List<BarangRequest> barang;
+  List<BarangPesanan> barang;
 
   PesananRequest(
       {this.createdBy,
@@ -57,9 +57,9 @@ class PesananRequest {
     jenis = json['jenis'];
     catatan = json['catatan'];
     if (json['barang'] != null) {
-      barang = <BarangRequest>[];
+      barang = <BarangPesanan>[];
       json['barang'].forEach((v) {
-        barang.add(BarangRequest.fromJson(v));
+        barang.add(BarangPesanan.fromJson(v));
       });
     }
   }
@@ -90,7 +90,7 @@ class PesananRequest {
   }
 }
 
-class BarangRequest {
+class BarangPesanan {
   int idBarang;
   int jumlahKemasan;
   int idKemasan;
@@ -108,7 +108,7 @@ class BarangRequest {
   int jumlahDiterima;
   String keterangan;
 
-  BarangRequest(
+  BarangPesanan(
       {this.idBarang,
       this.jumlahKemasan,
       this.idKemasan,
@@ -126,7 +126,7 @@ class BarangRequest {
       this.jumlahDiterima,
       this.keterangan});
 
-  BarangRequest.fromJson(Map<String, dynamic> json) {
+  BarangPesanan.fromJson(Map<String, dynamic> json) {
     idBarang = json['id_barang'];
     jumlahKemasan = json['jumlah_kemasan'];
     idKemasan = json['id_kemasan'];

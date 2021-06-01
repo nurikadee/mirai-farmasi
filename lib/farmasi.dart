@@ -89,7 +89,7 @@ class _FarmasiState extends State<Farmasi> {
         ),
         navigatorObservers: [defaultLifecycleObserver],
         debugShowCheckedModeBanner: false,
-        title: 'Mirai Medis',
+        title: 'Mirai Simfarsaa',
         theme: Utils.getTheme(),
         home: Splash());
   }

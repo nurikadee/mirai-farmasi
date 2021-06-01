@@ -413,10 +413,10 @@ class _PesanState extends State<PesananDetail> with PesananViewInterface {
                       pesananRequest.jenis = "NORMAL";
                       pesananRequest.isPpn = ppnValue;
 
-                      List<BarangRequest> listBarang = [];
+                      List<BarangPesanan> listBarang = [];
 
                       for (Barang barang in dataCart.barang) {
-                        BarangRequest barangReq = BarangRequest();
+                        BarangPesanan barangReq = BarangPesanan();
 
                         double sub = (barang.jumlahKemasan *
                             double.parse(barang.hargaKemasan));
